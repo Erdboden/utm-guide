@@ -37,8 +37,9 @@
     <argument
         android:name="mail"
         app:argType="com.example.utmguide.model.Mail" />
-        <action
-            android:id="@+id/action_navigation_single_mail_to_navigation_home"
-            app:destination="@id/navigation_home" />
     </fragment>
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="com.example.utmguide.ui.settings.SettingsActivity"
+        android:label="SettingsActivity" />
 </navigation>

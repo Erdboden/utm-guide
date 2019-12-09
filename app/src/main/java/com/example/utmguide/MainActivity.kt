@@ -1,25 +1,15 @@
 package com.example.utmguide
 
-import android.content.Context
-import android.content.pm.PackageManager
-import android.content.pm.Signature
 import android.os.Bundle
-import android.util.Base64
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.utmguide.api.ApiClient
-import com.example.utmguide.ui.events.EventsViewModel
-import com.example.utmguide.util.Constants.Companion.SHARED_PREF
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.microsoft.identity.common.adal.internal.AuthenticationConstants.OAuth2.ACCESS_TOKEN
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.security.MessageDigest
 
 
 class MainActivity : AppCompatActivity() {
@@ -45,5 +35,25 @@ class MainActivity : AppCompatActivity() {
         mainViewModel =
             ViewModelProviders.of(this, MainViewModel.Factory(this))
                 .get(MainViewModel::class.java)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        getMenuInflater().inflate(R.menu.action_menu, menu);
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        if (supportFragmentManager.popBackStackImmediate()) {
+            return true
+        }
+        return super.onSupportNavigateUp()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.settings -> findNavController(R.id.nav_host_fragment).navigate(R.id.settingsActivity)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -7,6 +7,7 @@ import android.content.pm.Signature
 import android.os.Bundle
 import android.util.Base64
 import androidx.appcompat.app.AppCompatActivity
+import com.example.utmguide.App
 import com.example.utmguide.MainActivity
 import com.example.utmguide.R
 import com.example.utmguide.util.Constants.Companion.SHARED_PREF
@@ -21,36 +22,20 @@ import java.security.MessageDigest
 
 class LoginActivity : AppCompatActivity() {
 
-    private var auth: ISingleAccountPublicClientApplication? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        PublicClientApplication.createSingleAccountPublicClientApplication(
-            this,
-            R.raw.auth_config,
-            object : IPublicClientApplication.ISingleAccountApplicationCreatedListener {
-                override fun onCreated(application: ISingleAccountPublicClientApplication) {
-                    /**
-                     * This test app assumes that the app is only going to support one account.
-                     * This requires "account_mode" : "SINGLE" in the config json file.
-                     *
-                     */
-                    auth = application
-                    auth!!.signOut(object : ISingleAccountPublicClientApplication.SignOutCallback {
-                        override fun onSignOut() {
-                        }
 
-                        override fun onError(exception: MsalException) {
-                        }
-                    })
-                    sign_in_btn.setOnClickListener { login() }
-                }
+        App.createAuth(this.applicationContext)
+            .signOut(object : ISingleAccountPublicClientApplication.SignOutCallback {
+            override fun onSignOut() {
+            }
 
-                override fun onError(exception: MsalException) {
-                    println(exception)
-                }
-            })
+            override fun onError(exception: MsalException) {
+            }
+        })
+        sign_in_btn.setOnClickListener { login() }
 
     }
 
@@ -58,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun login() {
         GlobalScope.launch {
-            auth!!.signIn(this@LoginActivity,"", arrayOf("mail.read", "mail.readwrite", "calendars.read", "calendars.readwrite"), getAuthInteractiveCallback())
+            App.createAuth(this@LoginActivity).signIn(this@LoginActivity,"", arrayOf("mail.read", "mail.readwrite", "calendars.read", "calendars.readwrite"), getAuthInteractiveCallback())
         }
     }
 
