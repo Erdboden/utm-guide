@@ -1,5 +1,6 @@
 package com.example.utmguide.ui.events
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.utmguide.R
+import com.example.utmguide.util.Constants
 import kotlinx.android.synthetic.main.fragment_events.*
 
 class EventsFragment : Fragment() {
@@ -33,9 +35,13 @@ class EventsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         event_list.layoutManager = LinearLayoutManager(requireContext())
-
+        val myEmail = requireActivity().getSharedPreferences(
+            Constants.SHARED_PREF,
+            Context.MODE_PRIVATE
+        ).getString(Constants.EMAIL, "")!!
         eventsViewModel.events.observe(this, Observer {
-            event_list.adapter = EventAdapter(it.value)
+
+            event_list.adapter = EventAdapter(it.value, myEmail)
         })
 
     }

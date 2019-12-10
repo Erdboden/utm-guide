@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
 import com.example.utmguide.R
 import kotlinx.android.synthetic.main.fragment_mail.*
+
 
 class MailFragment : Fragment() {
 
@@ -29,11 +32,21 @@ class MailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mail_list.layoutManager = LinearLayoutManager(requireContext())
+        setupRecycler()
 
         mailViewModel.mail.observe(this, Observer {
-            mail_list.adapter = MailAdapter(it)
+            mail_list.adapter = MailAdapter(it) { mailId -> mailViewModel.isRead(mailId, true) }
         })
 
+    }
+
+    private fun setupRecycler() {
+        mail_list.layoutManager = LinearLayoutManager(requireActivity())
+
+        val dividerItemDecoration = DividerItemDecoration(
+            requireContext(),
+            HORIZONTAL
+        )
+        mail_list.addItemDecoration(dividerItemDecoration)
     }
 }

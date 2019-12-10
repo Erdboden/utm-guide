@@ -20,6 +20,9 @@
         android:name="com.example.utmguide.ui.events.EventsFragment"
         android:label="@string/title_events"
         tools:layout="@layout/fragment_events" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_singleEventFragment"
+            app:destination="@id/singleEventFragment" />
     </fragment>
 
     <fragment
@@ -42,4 +45,13 @@
         android:id="@+id/settingsActivity"
         android:name="com.example.utmguide.ui.settings.SettingsActivity"
         android:label="SettingsActivity" />
+    <fragment
+        android:id="@+id/singleEventFragment"
+        android:name="com.example.utmguide.ui.events.single.SingleEventFragment"
+        android:label="@string/title_events"
+        tools:layout="@layout/fragment_single_event" >
+        <argument
+            android:name="event"
+            app:argType="com.example.utmguide.model.Event" />
+    </fragment>
 </navigation>

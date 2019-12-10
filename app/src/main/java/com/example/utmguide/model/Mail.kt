@@ -6,13 +6,15 @@ import android.os.Parcelable
 data class MailResponse(val value: List<Mail>)
 
 data class Mail(
+    val id: String,
     val subject: String,
     val isRead: Boolean,
     val receivedDateTime: String,
     val sender: Sender?,
     val body: Body?
-): Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readByte() != 0.toByte(),
         parcel.readString()!!,
@@ -47,9 +49,9 @@ data class Mail(
 
 data class Sender(
     val emailAddress: EmailAddress?
-):Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readParcelable< EmailAddress>(EmailAddress::class.java.classLoader)
+        parcel.readParcelable<EmailAddress>(EmailAddress::class.java.classLoader)
     ) {
     }
 
@@ -75,7 +77,7 @@ data class Sender(
 data class EmailAddress(
     val name: String,
     val address: String
-):Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!
@@ -105,7 +107,7 @@ data class EmailAddress(
 data class Body(
     val contentType: String,
     val content: String
-):Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!
@@ -131,3 +133,9 @@ data class Body(
         }
     }
 }
+
+class MailRequest(val isRead: Boolean)
+
+data class ReplyRequest(val message: Message, val comment: String)
+
+data class Message(val toRecipients: List<Sender>)

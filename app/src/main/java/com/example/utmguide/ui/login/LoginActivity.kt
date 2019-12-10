@@ -29,21 +29,31 @@ class LoginActivity : AppCompatActivity() {
 
         App.createAuth(this.applicationContext)
             .signOut(object : ISingleAccountPublicClientApplication.SignOutCallback {
-            override fun onSignOut() {
-            }
+                override fun onSignOut() {
+                }
 
-            override fun onError(exception: MsalException) {
-            }
-        })
+                override fun onError(exception: MsalException) {
+                }
+            })
         sign_in_btn.setOnClickListener { login() }
 
     }
 
 
-
     private fun login() {
         GlobalScope.launch {
-            App.createAuth(this@LoginActivity).signIn(this@LoginActivity,"", arrayOf("mail.read", "mail.readwrite", "calendars.read", "calendars.readwrite"), getAuthInteractiveCallback())
+            App.createAuth(this@LoginActivity).signIn(
+                this@LoginActivity,
+                "",
+                arrayOf(
+                    "mail.read",
+                    "mail.send",
+                    "mail.readwrite",
+                    "calendars.read",
+                    "calendars.readwrite"
+                ),
+                getAuthInteractiveCallback()
+            )
         }
     }
 
