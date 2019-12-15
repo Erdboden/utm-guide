@@ -52,8 +52,7 @@ data class Sender(
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readParcelable<EmailAddress>(EmailAddress::class.java.classLoader)
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
 

@@ -6,16 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginActivity">
 
-    <Button
-        android:id="@+id/sign_in_btn"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/image_utm"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_edge_margin"
-        android:layout_marginEnd="@dimen/common_edge_margin"
-        android:text="@string/sign_in"
+        android:src="@drawable/utm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/sign_in_btn"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginStart="@dimen/common_edge_margin"
+        android:layout_marginEnd="@dimen/common_edge_margin"
+        android:backgroundTint="@color/colorUtm"
+        android:text="@string/sign_in"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/image_utm" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
